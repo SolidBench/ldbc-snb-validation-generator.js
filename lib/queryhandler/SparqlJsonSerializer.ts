@@ -12,7 +12,7 @@ export class SparqlJsonSerializer {
 
   public serialize(params: QueryParameters): string {
     // Construct bindings for all solution mappings in the solution sequence
-    const bindings = params.results.map(solutionMapping => {
+    const bindings = params.results.map((solutionMapping) => {
       // Validate number of variables
       if (solutionMapping.length !== this.resultVariables.length) {
         throw new Error(`Invalid query parameters for '${params.queryIdentifier}'. Encountered a validation query with ${solutionMapping.length} variables in a query result, while ${this.resultVariables.length} result variables were defined in the config.`);
@@ -47,9 +47,10 @@ export class SparqlJsonSerializer {
         return {
           type: 'literal',
           value: term.value,
+          // eslint-disable-next-line ts/naming-convention
           ...term.language ? { 'xml:lang': term.language } : undefined,
           ...!term.language && term.datatype && term.datatype.value !== 'http://www.w3.org/2001/XMLSchema#string' ?
-            { datatype: term.datatype.value } :
+              { datatype: term.datatype.value } :
             undefined,
         };
       case 'Variable':

@@ -12,7 +12,7 @@ As input, this tool it takes [LDBC validation parameter files](https://github.co
 ["com.ldbc.driver.workloads.ldbc.snb.interactive.LdbcQuery6",30786325583618,"Angola",10]|[["Tom_Gehrels",28],["Sammy_Sosa",9],["Charles_Dickens",5],["Genghis_Khan",5],["Ivan_Ljubičić",5],["Marc_Gicquel",5],["Freddie_Mercury",4],["Peter_Hain",4],["Robert_Fripp",4],["Boris_Yeltsin",3]]
 ...
 ```
-Each row in this file corresponds to validation parameters for a given query, and its expected results. 
+Each row in this file corresponds to validation parameters for a given query, and its expected results.
 
 As output, this tool creates a directory containing `.sparql` and `.results` files for each row in this validation parameter file.
 The `.sparql` is a plain SPARQL query string, and `.results` contains the expected result serialized as [SPARQL/JSON](https://www.w3.org/TR/sparql11-results-json/).

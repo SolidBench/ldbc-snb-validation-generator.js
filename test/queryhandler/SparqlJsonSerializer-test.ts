@@ -24,7 +24,7 @@ describe('SparqlJsonSerializer', () => {
           [ 'ex:valA.1', 'valB.1' ],
           [ 'ex:valA.2', 'valB.2' ],
         ],
-      ))).toEqual(`{
+      ))).toBe(`{
   "head": {
     "vars": [
       "varA",
@@ -66,7 +66,7 @@ describe('SparqlJsonSerializer', () => {
           [ 'ex:valA.1', 'valB.1' ],
           [ 'ex:valA.2' ],
         ],
-      ))).toThrowError(`Invalid query parameters for 'q1'. Encountered a validation query with 1 variables in a query result, while 2 result variables were defined in the config.`);
+      ))).toThrow(`Invalid query parameters for 'q1'. Encountered a validation query with 1 variables in a query result, while 2 result variables were defined in the config.`);
     });
   });
 
@@ -98,17 +98,17 @@ describe('SparqlJsonSerializer', () => {
 
     it('throws on variables', () => {
       expect(() => serializer.termToSparqlJsonTerm(DF.variable('a')))
-        .toThrowError('Unsupported term type Variable for SPARQL/JSON serialization');
+        .toThrow('Unsupported term type Variable for SPARQL/JSON serialization');
     });
 
     it('throws on default graphs', () => {
       expect(() => serializer.termToSparqlJsonTerm(DF.defaultGraph()))
-        .toThrowError('Unsupported term type DefaultGraph for SPARQL/JSON serialization');
+        .toThrow('Unsupported term type DefaultGraph for SPARQL/JSON serialization');
     });
 
     it('throws on quads', () => {
       expect(() => serializer.termToSparqlJsonTerm(DF.quad(DF.namedNode('a'), DF.namedNode('a'), DF.namedNode('a'))))
-        .toThrowError('Unsupported term type Quad for SPARQL/JSON serialization');
+        .toThrow('Unsupported term type Quad for SPARQL/JSON serialization');
     });
   });
 });

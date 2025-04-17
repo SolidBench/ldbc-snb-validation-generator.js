@@ -1,4 +1,4 @@
-import type * as Readable from 'stream';
+import type * as Readable from 'node:stream';
 
 /**
  * A source of parameters.

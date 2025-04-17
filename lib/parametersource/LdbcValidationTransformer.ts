@@ -1,5 +1,6 @@
-import type { TransformCallback } from 'stream';
-import { Transform } from 'stream';
+import type { TransformCallback } from 'node:stream';
+import { Transform } from 'node:stream';
+import type { QueryResult } from '../QueryParameters';
 import { QueryParameters } from '../QueryParameters';
 
 type BufferEncoding = 'ascii' | 'utf8' | 'utf-8' | 'utf16le' | 'ucs2' | 'ucs-2'
@@ -15,23 +16,25 @@ export class LdbcValidationTransformer extends Transform {
     super({ decodeStrings: true, readableObjectMode: true, writableObjectMode: true });
   }
 
+  // eslint-disable-next-line ts/naming-convention
   public _transform(chunkBuffer: Buffer, encoding: BufferEncoding, callback: TransformCallback): void {
     const chunk = chunkBuffer.toString();
     for (let i = 0; i < chunk.length; i++) {
       const character = chunk.charAt(i);
-      if (character !== '\n') {
-        this.lineBuffer.push(character);
-      } else {
+      if (character === '\n') {
         try {
           this.flushLine();
         } catch (error: unknown) {
           this.destroy(<Error> error);
         }
+      } else {
+        this.lineBuffer.push(character);
       }
     }
     callback();
   }
 
+  // eslint-disable-next-line ts/naming-convention
   public _flush(callback: TransformCallback): void {
     try {
       this.flushLine();
@@ -74,6 +77,6 @@ export class LdbcValidationTransformer extends Transform {
     // Splice off last query parameter, because that one is unused (unsure why, seems to always be 20...)
     queryParameters.splice(-1, 1);
 
-    return new QueryParameters(queryIdentifier, queryParameters, results);
+    return new QueryParameters(<string>queryIdentifier, <(string | number)[]>queryParameters, <QueryResult[][]>results);
   }
 }

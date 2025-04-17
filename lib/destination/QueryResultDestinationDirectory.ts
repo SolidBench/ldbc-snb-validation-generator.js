@@ -1,4 +1,4 @@
-import * as Path from 'path';
+import * as Path from 'node:path';
 import { ensureDir, writeFile } from 'fs-extra';
 import type { IQueryResultDestination } from './IQueryResultDestination';
 
