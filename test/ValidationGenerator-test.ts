@@ -1,4 +1,4 @@
-import { PassThrough } from 'stream';
+import { PassThrough } from 'node:stream';
 import { VariableTemplateLiteral, VariableTemplateNamedNode } from 'sparql-query-parameter-instantiator';
 import type { IQueryResultDestination } from '../lib/destination/IQueryResultDestination';
 import type { IParameterSource } from '../lib/parametersource/IParameterSource';
@@ -8,8 +8,9 @@ import { QueryParameters } from '../lib/QueryParameters';
 import { ValidationGenerator } from '../lib/ValidationGenerator';
 
 const files: Record<string, string> = {};
-jest.mock('fs', () => ({
-  ...jest.requireActual('fs'),
+
+jest.mock('node:fs', () => ({
+  ...jest.requireActual('node:fs'),
   promises: {
     async readFile(filePath: string) {
       if (filePath in files) {
@@ -108,7 +109,8 @@ describe('ValidationGenerator', () => {
       await new Promise(resolve => setTimeout(resolve, 10));
 
       expect(destination.write).toHaveBeenCalledTimes(2);
-      expect(destination.write).toHaveBeenNthCalledWith(1,
+      expect(destination.write).toHaveBeenNthCalledWith(
+        1,
         0,
         `SELECT ?selected1 ?selected2 ?selected3 WHERE {
   <ex:V1> <ex:p1> ?selected1.
@@ -155,8 +157,10 @@ describe('ValidationGenerator', () => {
       }
     ]
   }
-}`);
-      expect(destination.write).toHaveBeenNthCalledWith(2,
+}`,
+      );
+      expect(destination.write).toHaveBeenNthCalledWith(
+        2,
         1,
         `SELECT ?selected1 WHERE {
   <ex:V1> <ex:p1.2> ?selected1.
@@ -185,7 +189,8 @@ describe('ValidationGenerator', () => {
       }
     ]
   }
-}`);
+}`,
+      );
     });
   });
 
@@ -219,7 +224,7 @@ describe('ValidationGenerator', () => {
 
     it('generate', async() => {
       await expect(generator.generate()).rejects
-        .toThrowError(`Invalid query parameters for 'q2'. Encountered a validation query with 2 parameters, while 3 variables were defined in the config.`);
+        .toThrow(`Invalid query parameters for 'q2'. Encountered a validation query with 2 parameters, while 3 variables were defined in the config.`);
     });
   });
 });

@@ -1,4 +1,4 @@
-import type { Readable } from 'stream';
+import type { Readable } from 'node:stream';
 import { createReadStream } from 'fs-extra';
 import type { IParameterSource } from './IParameterSource';
 import { LdbcValidationTransformer } from './LdbcValidationTransformer';

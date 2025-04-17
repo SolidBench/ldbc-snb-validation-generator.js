@@ -19,7 +19,7 @@ export class ValidationGenerator {
     return new Promise<void>((resolve, reject) => {
       let queryIndex = 0;
       parametersStream.on('data', (parameters: QueryParameters) => {
-        // eslint-disable-next-line @typescript-eslint/no-this-alias,consistent-this
+        // eslint-disable-next-line ts/no-this-alias
         const self = this;
         pendingPromises.push((async function() {
           for (const queryHandler of self.queryHandlers) {
@@ -37,7 +37,7 @@ export class ValidationGenerator {
 
           // eslint-disable-next-line no-console
           console.warn(`Could not find a query handler for ${parameters.queryIdentifier}`);
-        })().catch(error => {
+        })().catch((error) => {
           parametersStream.emit('error', error);
         }));
       });
