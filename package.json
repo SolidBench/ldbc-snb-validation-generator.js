@@ -39,15 +39,15 @@
     "build": "yarn run build:ts && yarn run build:components",
     "build:components": "componentsjs-generator -s lib -i .componentsignore",
     "build:ts": "tsc",
-    "validate": "yarn ls",
+    "validate": "yarn list",
     "prepare": "husky && yarn run build",
     "version": "manual-git-changelog onversion"
   },
   "dependencies": {
     "@rdfjs/types": "*",
-    "@types/fs-extra": "^9.0.13",
-    "componentsjs": "^5.0.1",
-    "fs-extra": "^10.1.0",
+    "@types/fs-extra": "^11.0.0",
+    "componentsjs": "^6.0.0",
+    "fs-extra": "^11.0.0",
     "sparql-query-parameter-instantiator": "^2.6.0"
   },
   "devDependencies": {
